@@ -1,11 +1,8 @@
-# Cookbook Name:: kubernetes-cluster
-# Attributes:: registry
 #
-# Author: Drew Rapenchuk <drapenchuk@bloomberg.net>
+# Cookbook: kubernetes-cluster
+# License: Apache 2.0
 #
-# Copyright 2015, Bloomberg, L.P.
-#
-# All rights reserved - Do Not Redistribute
+# Copyright 2015-2016, Bloomberg Finance L.P.
 #
 
 default['kubernetes']['registry'].tap do |registry|

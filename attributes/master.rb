@@ -1,13 +1,8 @@
 #
-# Cookbook Name:: kubernetes-cluster
-# Attributes:: master
+# Cookbook: kubernetes-cluster
+# License: Apache 2.0
 #
-# Author: Drew Rapenchuk <drapenchuk@bloomberg.net>
-#
-# Copyright 2015, Bloomberg, L.P.
-#
-# All rights reserved - Do Not Redistribute
-#
+# Copyright 2015-2016, Bloomberg Finance L.P.
 #
 
 default['kubernetes']['master'].tap do |master|
@@ -18,7 +13,7 @@ default['kubernetes']['master'].tap do |master|
 
   #Set the Kubernetes service network size
   master['service-network'] = '1.90.0.0/16'
-  
+
   #Get the Kubernetes master hostname
   master['fqdn'] = node['fqdn']
 
