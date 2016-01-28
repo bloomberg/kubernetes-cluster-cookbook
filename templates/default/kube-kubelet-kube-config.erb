@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Config
+users:
+- name: kubelet
+  user:
+    client-certificate: <%= @etcd_cert_dir %>/client.srv.crt
+    client-key: <%= @etcd_cert_dir %>/client.srv.key
+clusters:
+- name: kube
+  cluster:
+    server: https://127.0.0.1:<%= @kubernetes_secure_api_port %>
+    certificate-authority: <%= @etcd_cert_dir %>/client.ca.crt
+contexts:
+- context:
+    cluster: kube
+    user: kubelet

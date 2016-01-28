@@ -1,0 +1,14 @@
+# File created by Chef! Any local changes will be overwritten next Chef run!
+
+FLANNEL_ETCD_KEY="/coreos.com/network"
+
+# Secure ETCD configuration parameters go under here when node['kubernetes']['secure']['enabled'] == 'false'
+<% if node['kubernetes']['secure']['enabled'] == 'false' -%>
+FLANNEL_ETCD="http://127.0.0.1:<%= @etcd_client_port %>"
+<% end -%>
+
+# Secure ETCD configuration parameters go under here when node['kubernetes']['secure']['enabled'] == 'true'
+<% if node['kubernetes']['secure']['enabled'] == 'true' -%>
+FLANNEL_ETCD="https://127.0.0.1:<%= @etcd_client_port %>"
+FLANNEL_OPTIONS="--etcd-certfile=<%= @etcd_cert_dir %>/client.srv.crt --etcd-keyfile=<%= @etcd_cert_dir %>/client.srv.key --etcd-cafile=<%= @etcd_cert_dir %>/client.ca.crt"
+<% end -%>
