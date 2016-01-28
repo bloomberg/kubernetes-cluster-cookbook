@@ -2,9 +2,9 @@ name 'kubernetes-cluster'
 maintainer 'Drew Rapenchuk'
 maintainer_email 'drapenchuk@bloomberg.net'
 license 'Apache 2.0'
-description 'Cookbook for creating highly available, secure kubernetes clusters.'
-long_description 'Cookbook for creating highly available, secure kubernetes clusters.'
-version '1.0.0'
+description 'Application cookbook for installing and configuring a Kubernetes cluster.'
+long_description 'Application cookbook for installing and configuring a Kubernetes cluster.'
+version '0.7.0'
 
 %w(centos redhat).each do |name|
   supports name, '~> 7.1'

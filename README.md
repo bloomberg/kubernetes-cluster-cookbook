@@ -1,7 +1,7 @@
 # kubernetes-cluster cookbook
 [![Build Status](https://img.shields.io/travis/bloomberg/kubernetes-cluster-cookbook.svg)](https://travis-ci.org/bloomberg/kubernetes-cluster-cookbook)
 [![Code Quality](https://img.shields.io/codeclimate/github/bloomberg/kubernetes-cluster-cookbook.svg)](https://codeclimate.com/github/bloomberg/kubernetes-cluster-cookbook)
-[![Cookbook Version](https://img.shields.io/cookbook/v/kubernetes-cluster.svg)](https://supermarket.chef.io/cookbooks/confd)
+[![Cookbook Version](https://img.shields.io/cookbook/v/kubernetes-cluster.svg)](https://supermarket.chef.io/cookbooks/kubernetes-cluster)
 [![License](https://img.shields.io/badge/license-Apache_2-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 
 Application cookbook which installs and configures a Kubernetes
