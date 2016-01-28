@@ -37,6 +37,7 @@ Masters:
 - node['kubernetes']['etcd']['client']['key'] - Key matching client certificate
 
 Minions:
+- node['kubernetes']['etcd']['client']['ca'] - Certificate authority for managing authentication for client to master
 - node['kubernetes']['etcd']['client']['cert'] - Certificate the client identifies as for connections
 - node['kubernetes']['etcd']['client']['key'] - Key matching client certificate
 
