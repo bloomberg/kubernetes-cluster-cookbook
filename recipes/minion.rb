@@ -1,10 +1,10 @@
 #
-# Cookbook Name:: kubernetes-cluster
-# Recipe:: minion
+# Cookbook: kubernetes-cluster
+# License: Apache 2.0
 #
-# Copyright (C) 2015 Bloomberg Finance L.P.
+# Copyright 2015-2016, Bloomberg Finance L.P.
 #
-# All rights reserved - Do Not Redistribute
+
 node.tag('kubernetes.minion')
 
 #Get hostname for kubernetes master DEFAULT REQUIRES CHEF SERVER

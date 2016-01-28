@@ -1,10 +1,8 @@
 #
-# Cookbook Name:: kubernetes-cluster
-# Recipe:: kube-scheduler
+# Cookbook: kubernetes-cluster
+# License: Apache 2.0
 #
-# Copyright (C) 2015 Bloomberg Finance L.P.
-#
-# All rights reserved - Do Not Redistribute
+# Copyright 2015-2016, Bloomberg Finance L.P.
 #
 
 service 'kube-scheduler' do
@@ -16,4 +14,3 @@ template '/etc/kubernetes/scheduler' do
   source 'kube-scheduler.erb'
   notifies :restart, 'service[kube-scheduler]', :immediately
 end
-

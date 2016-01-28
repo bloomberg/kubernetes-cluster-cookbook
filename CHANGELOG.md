@@ -1,6 +1,6 @@
-# Change Log
-All notable changes to this project will be documented in this file.
-This project will adhere to strict [Semantic Versioning](http://semver.org/) starting at v1.0.0.
+# Change Log All notable changes to this project will be documented in
+this file.  This project will adhere to strict
+[Semantic Versioning](http://semver.org/) starting at v1.0.0.
 
 ## [0.6.0] - 2015-12-02
 ### Changed

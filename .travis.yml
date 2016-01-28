@@ -1,0 +1,13 @@
+---
+language: ruby
+sudo: false
+notifications:
+  slack: bloomberg-rnd:BvYmxrV9xj902XWTRNrkLNkR
+script: bundle exec rake travis
+rvm:
+  - 2.2
+branches:
+  only:
+    - master
+matrix:
+  fast_finish: true

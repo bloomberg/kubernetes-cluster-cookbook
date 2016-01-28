@@ -1,14 +1,9 @@
 #
-# Cookbook Name:: kubernetes-cluster
-# Recipe:: network
+# Cookbook: kubernetes-cluster
+# License: Apache 2.0
 #
-# Copyright (C) 2015 Bloomberg Finance L.P.
+# Copyright 2015-2016, Bloomberg Finance L.P.
 #
-# All rights reserved - Do Not Redistribute
-#
-
-#Hackish way to pull flannel network config
-Chef::Resource::Execute.send(:include, Flannel::Network)
 
 execute 'getnetwork' do
   command "etcdctl get coreos.com/network/config | sed '/^$/d' > /etc/sysconfig/flannel-network"
@@ -16,7 +11,7 @@ execute 'getnetwork' do
   action :nothing
 end.run_action(:run)
 
-execute 'setnetwork' do 
+execute 'setnetwork' do
   command 'etcdctl set coreos.com/network/config < /etc/sysconfig/flannel-network'
   action :nothing
 end

@@ -1,6 +1,12 @@
-module Flannel
-  module Network
+#
+# Cookbook: confd
+# License: Apache 2.0
+#
+# Copyright 2015-2016, Bloomberg Finance L.P.
+#
 
+module KubernetesCookbook
+  module Helpers
     include Chef::Mixin::ShellOut
 
     def flannel_network?
@@ -13,3 +19,5 @@ module Flannel
     end
   end
 end
+
+Chef::Recipe.send(:include, KubernetesCookbook::Helpers)

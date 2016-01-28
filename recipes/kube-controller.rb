@@ -1,10 +1,9 @@
 #
-# Cookbook Name:: kubernetes-cluster
-# Recipe:: kube-controller
+# Cookbook: kubernetes-cluster
+# License: Apache 2.0
 #
-# Copyright (C) 2015 Bloomberg Finance L.P.
+# Copyright 2015-2016, Bloomberg Finance L.P.
 #
-# All rights reserved - Do Not Redistribute
 
 service 'kube-controller-manager' do
   action :enable
@@ -15,5 +14,3 @@ template '/etc/kubernetes/controller-manager' do
   source 'kube-controller-manager.erb'
   notifies :restart, 'service[kube-controller-manager]', :immediately
 end
-
-

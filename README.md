@@ -1,11 +1,16 @@
-#kubernetes-cluster-cookbook
-=================
-Cookbook for configuring container clusters.
+# kubernetes-cluster cookbook
+[![Build Status](https://img.shields.io/travis/bloomberg/kubernetes-cluster-cookbook.svg)](https://travis-ci.org/bloomberg/kubernetes-cluster-cookbook)
+[![Code Quality](https://img.shields.io/codeclimate/github/bloomberg/kubernetes-cluster-cookbook.svg)](https://codeclimate.com/github/bloomberg/kubernetes-cluster-cookbook)
+[![Cookbook Version](https://img.shields.io/cookbook/v/kubernetes-cluster.svg)](https://supermarket.chef.io/cookbooks/confd)
+[![License](https://img.shields.io/badge/license-Apache_2-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 
-## THIS COOKBOOK IS CURRENTLY A POC AND IS NOT AND MAY NEVER BE READY FOR PRODUCTION USE. THERE IS CURRENTLY NO PROMISE FOR SUPPORT FOR THIS PROJECT
+Application cookbook which installs and configures a Kubernetes
+cluster.
 
-## Supported platforms
-- EL 7.1+
+## Supported Platforms
+- RHEL 7.1+ (CentOS 7.1+)
+
+## Basic Usage
 
 The purpose of this cookbook is to install and configure the proper sevices to create application container clusters. This includes etcd, Kubernetes, Flannel, and Docker- specifically aimed at operating on Enterprise Linux platforms. The best method to using this cookbook is to create a wrapper with specific configurations for your project, adding this cookbook as a dependency.
 
@@ -32,7 +37,7 @@ Masters:
 - node['kubernetes']['etcd']['peer']['ca'] - Certificate authority for managing authentication for master to master connections (etcd sync)
 - node['kubernetes']['etcd']['peer']['cert'] - Certificate the master identifies as for peer connections
 - node['kubernetes']['etcd']['peer']['key'] - Key matching peer certificate
-- node['kubernetes']['etcd']['client']['ca'] - Certificate authority for managing authentication for client to master connections (etcdctl/kubectl/kubelet) 
+- node['kubernetes']['etcd']['client']['ca'] - Certificate authority for managing authentication for client to master connections (etcdctl/kubectl/kubelet)
 - node['kubernetes']['etcd']['client']['cert'] - Certificate the client identifies as for connections
 - node['kubernetes']['etcd']['client']['key'] - Key matching client certificate
 
@@ -62,4 +67,3 @@ However, no meaningful tests are currently written. This will be fixed.
 [2]: https://github.com/sethvargo/chefspec
 [3]: http://vagrantup.com
 [4]: https://github.com/opscode/bento
-

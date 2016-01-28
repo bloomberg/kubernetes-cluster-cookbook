@@ -1,10 +1,9 @@
 #
-# Cookbook Name:: kubernetes-cluster
-# Recipe:: kubelet
+# Cookbook: kubernetes-cluster
+# License: Apache 2.0
 #
-# Copyright (C) 2015 Bloomberg Finance L.P.
+# Copyright 2015-2016, Bloomberg Finance L.P.
 #
-# All rights reserved - Do Not Redistribute
 
 unless Chef::Config[:solo]
 
@@ -40,4 +39,3 @@ template '/etc/kubernetes/kubelet' do
   )
   notifies :restart, 'service[kubelet]', :immediately
 end
-

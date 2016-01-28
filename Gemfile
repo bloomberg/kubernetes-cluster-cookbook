@@ -1,23 +1,32 @@
-source 'http://artifactory.dev.bloomberg.com:8080/artifactory/api/gems/ruby-repos/'
-
-gem 'berkshelf'
+source 'https://rubygems.org'
 gem 'chef-sugar'
 gem 'chef-vault'
-gem 'rake'
+gem 'poise', '~> 2.2'
+gem 'poise-service', '~> 1.0'
+gem 'poise-boiler'
 
-group :development do
-  gem 'guard-rspec'
-  gem 'guard-rubocop'
-  gem 'guard-foodcritic'
+group :lint do
+  gem 'rubocop'
+  gem 'foodcritic'
 end
 
-group :test, :integration do
+group :unit do
   gem 'chefspec'
-  gem 'ci_reporter_rspec'
-  gem 'foodcritic'
-  gem 'kitchen-openstack'
-  gem 'rspec', '~> 3.1'
-  gem 'rubocop'
+end
+
+group :integration do
   gem 'serverspec'
-  gem 'test-kitchen'
+end
+
+group :development do
+  gem 'awesome_print'
+  gem 'guard-kitchen'
+  gem 'guard-rspec'
+  gem 'guard-rubocop'
+  gem 'rake'
+  gem 'stove'
+end
+
+group :doc do
+  gem 'yard'
 end

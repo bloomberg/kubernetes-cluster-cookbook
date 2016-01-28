@@ -13,7 +13,7 @@ guard 'rubocop' do
   watch('metadata.rb')
 end
 
-guard :rspec, cmd: 'rspec', spec_paths: %w(test/spec) do
+guard :rspec, cmd: 'bundle exec rspec', spec_paths: %w(test/spec) do
   watch(%r{^(recipes|libraries|providers|resources)/(.+)\.rb$}) do |m|
     "test/spec/#{m[1]}/#{m[2]}_spec.rb"
   end
