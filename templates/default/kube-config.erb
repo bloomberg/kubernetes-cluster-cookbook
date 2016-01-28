@@ -1,0 +1,10 @@
+# File created by Chef! Any local changes will be overwritten next Chef run!
+
+KUBE_LOGTOSTDERR="--logtostderr=true"
+KUBE_LOG_LEVEL="--v=0"
+KUBE_ALLOW_PRIV="--allow_privileged=false"
+KUBE_MASTER="--master=http://<%= @kubernetes_master %>:<%= @kubernetes_api_port %>"
+
+<% if node['kubernetes']['secure']['enabled'] == 'true' -%>
+KUBE_OPTIONS="--client-certificate=<%= @etcd_cert_dir %>/client-srv.crt --client-key=<%= @etcd_cert_dir %>/client-srv.key"
+<% end -%>

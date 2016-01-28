@@ -1,0 +1,21 @@
+# File created by Chef! Any local changes will be overwritten next Chef run!
+
+# Insecure kube configuration parameters go under here when node['kubernetes']['secure']['enabled'] == 'false'
+<% if node['kubernetes']['secure']['enabled'] == 'false' -%>
+KUBE_API_ADDRESS="--insecure-bind-address=0.0.0.0"
+KUBE_API_PORT="--insecure-port=<%= @kubernetes_api_port %>"
+KUBELET_PORT="--kubelet_port=<%= @kubelet_port %>"
+KUBE_ETCD_SERVERS="--etcd_servers=http://<%= @kubernetes_master %>:<%= @etcd_client_port %>"
+KUBE_SERVICE_ADDRESSES="--service-cluster-ip-range=<%= @kubernetes_network %>"
+KUBE_ADMISSION_CONTROL="--admission_control=NamespaceLifecycle,NamespaceExists,LimitRanger,SecurityContextDeny,ResourceQuota"
+<% end -%>
+
+# Secure kube configuration parameters go under here when node['kubernetes']['secure']['enabled'] == 'true'
+<% if node['kubernetes']['secure']['enabled'] == 'true' -%>
+KUBE_API_ADDRESS="--bind-address=0.0.0.0 --insecure-bind-address=127.0.0.1 "
+KUBE_API_PORT="--secure-port=<%= @kubernetes_secure_api_port %> --insecure-port=<%= @kubernetes_api_port %>"
+KUBELET_PORT="--kubelet_port=<%= @kubelet_port %>"
+KUBE_ETCD_SERVERS="--etcd-config=/etc/kubernetes/etcd.client.conf"
+KUBE_SERVICE_ADDRESSES="--service-cluster-ip-range=<%= @kubernetes_network %>"
+KUBE_ADMISSION_CONTROL="--admission_control=NamespaceLifecycle,NamespaceExists,LimitRanger,ResourceQuota --client-ca-file=<%= @etcd_cert_dir %>/client.ca.crt --tls-cert-file=<%= @etcd_cert_dir %>/client.srv.crt --tls-private-key-file=<%= @etcd_cert_dir %>/client.srv.key --kubelet-certificate-authority=<%= @etcd_cert_dir %>/client.ca.crt --kubelet-client-certificate=<%= @etcd_cert_dir %>/client.srv.crt --kubelet-client-key=<%= @etcd_cert_dir %>/client.srv.key"
+<% end -%>
