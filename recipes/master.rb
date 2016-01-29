@@ -11,17 +11,17 @@ include_recipe 'kubernetes-cluster::default'
 
 case node['platform']
 when 'redhat', 'centos', 'fedora'
-    yum_package "cockpit #{node['kubernetes_cluster']['package']['cockpit']['version']}" do
-      only_if { node['kubernetes_cluster']['package']['cockpit']['enabled'] }
-    end
-    yum_package "etcd #{node['kubernetes_cluster']['package']['etcd']['version']}"
-    yum_package "kubernetes-master #{node['kubernetes_cluster']['package']['kubernetes_master']['version']}"
-    yum_package "#{node['kubernetes_cluster']['package']['docker']['name']} #{node['kubernetes_cluster']['package']['docker']['version']}"
+  yum_package "cockpit #{node['kubernetes_cluster']['package']['cockpit']['version']}" do
+    only_if { node['kubernetes_cluster']['package']['cockpit']['enabled'] }
+  end
+  yum_package "etcd #{node['kubernetes_cluster']['package']['etcd']['version']}"
+  yum_package "kubernetes-master #{node['kubernetes_cluster']['package']['kubernetes_master']['version']}"
+  yum_package "#{node['kubernetes_cluster']['package']['docker']['name']} #{node['kubernetes_cluster']['package']['docker']['version']}"
 end
 
 group 'kube-services' do
   only_if { node['kubernetes']['secure']['enabled'] == 'true' }
-  members ['etcd', 'kube']
+  members %w(etcd kube)
   action :modify
 end
 
