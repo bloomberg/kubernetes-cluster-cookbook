@@ -1,9 +1,8 @@
 #
-# Cookbook Name:: kubernetes-cluster
+# Cookbook: kubernetes-cluster
+# License: Apache 2.0
 #
-# Copyright (C) 2015 Bloomberg Finance L.P.
-#
-# All rights reserved - Do Not Redistribute
+# Copyright 2015-2016, Bloomberg Finance L.P.
 #
 
 #Enable security
@@ -18,7 +17,7 @@ default['kubernetes']['secure']['directory'] = '/etc/kubernetes/secrets'
 default['kubernetes']['insecure']['apiport'] = '8080'
 default['kubernetes']['secure']['apiport'] = '8443'
 
-#Set port for Kubelet communication 
+#Set port for Kubelet communication
 default['kubelet']['port'] = '10250'
 
 # Package versions

@@ -1,12 +1,8 @@
 #
-# Cookbook Name:: kubernetes-cluster
-# Attributes:: minion
+# Cookbook: kubernetes-cluster
+# License: Apache 2.0
 #
-# Author: Drew Rapenchuk <drapenchuk@bloomberg.net>
-#
-# Copyright 2015, Bloomberg, L.P.
-#
-# All rights reserved - Do Not Redistribute
+# Copyright 2015-2016, Bloomberg Finance L.P.
 #
 
 default['kubernetes']['minion'].tap do |minion|
@@ -20,10 +16,10 @@ default['kubernetes']['minion'].tap do |minion|
   #Add custom docker registry- optionally insecure
   minion['docker-registry'] = nil
   minion['registry-insecure'] = nil
-  
+
   #Set docker base directory for local storage- make sure this has plenty of space, optimally its own volume
   #This directory will be created if it does not exist
-  minion['docker-basedir'] = nil  
+  minion['docker-basedir'] = nil
 
 end
 
