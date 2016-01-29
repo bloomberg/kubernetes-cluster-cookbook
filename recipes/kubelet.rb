@@ -5,12 +5,6 @@
 # Copyright 2015-2016, Bloomberg Finance L.P.
 #
 
-unless Chef::Config[:solo]
-
-  cluster_proxy = search(:node, 'tags:"kubernetes.clusterproxy"').first
-
-end
-
 service 'kubelet' do
   action :enable
 end
