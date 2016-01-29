@@ -127,7 +127,7 @@ Example solo.json for registry
 {
   "kubernetes": {
     "registry": {
-      "port: "5000",
+      "port": "5000",
       "workers": "8",
       "storage": "/kube/docker-storage/"
     }
