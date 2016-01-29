@@ -11,5 +11,5 @@ KUBELET_ARGS="--register-node=true <% if @pause_container -%>--pod_infra_contain
 # Secure kubelet configuration parameters go under here when node['kubernetes']['secure']['enabled'] == 'true'
 <% if node['kubernetes']['secure']['enabled'] == 'true' -%>
 KUBELET_API_SERVER="--api_servers=https://127.0.0.1:<%= @kubernetes_secure_api_port %>"
-KUBELET_ARGS="--register-node=true <% if @pause_container -%>--pod_infra_container_image=<%= @pause_container %><% end -%> --kubeconfig=<%= @etcd_cert_dir %>/kube.config"
+KUBELET_ARGS="--register-node=true <% if @pause_container -%>--pod_infra_container_image=<%= @pause_container %><% end -%> --kubeconfig=<%= @etcd_cert_dir %>/kube.config --tls-cert-file=<%= @etcd_cert_dir %>/client.srv.bundle.crt --tls-private-key-file=<%= @etcd_cert_dir %>/client.srv.key"
 <% end -%>
