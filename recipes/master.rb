@@ -26,7 +26,8 @@ group 'kube-services' do
 end
 
 if node['kubernetes']['secure']['enabled'] == 'true'
-  file "#{node['kubernetes']['secure']['directory']}/client.ca.crt" do
+  file 'kubernetes::master[client.ca.crt]' do
+    path "#{node['kubernetes']['secure']['directory']}/client.ca.crt"
     content node['kubernetes']['etcd']['client']['ca']
     owner 'root'
     group 'kube-services'

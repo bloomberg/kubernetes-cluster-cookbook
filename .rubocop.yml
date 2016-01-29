@@ -32,8 +32,6 @@ Metrics/AbcSize:
   Enabled: false
 PerceivedComplexity:
   Enabled: false
-Style/SingleSpaceBeforeFirstArg:
-  Enabled: false
 Style/ClassAndModuleChildren:
   Enabled: false
 Style/FileName:
