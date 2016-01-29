@@ -7,7 +7,7 @@
 
 node.tag('kubernetes.minion')
 
-#Get hostname for kubernetes master DEFAULT REQUIRES CHEF SERVER
+# Get hostname for kubernetes master DEFAULT REQUIRES CHEF SERVER
 include_recipe 'kubernetes-cluster::default'
 include_recipe 'kubernetes-cluster::proxy'
 

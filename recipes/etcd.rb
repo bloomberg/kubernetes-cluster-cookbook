@@ -6,7 +6,7 @@
 #
 
 unless Chef::Config[:solo]
-  etcdservers = Array.new
+  etcdservers = []
   search(:node, 'tags:"kubernetes.master"') do |s|
     etcdservers << s[:fqdn]
   end

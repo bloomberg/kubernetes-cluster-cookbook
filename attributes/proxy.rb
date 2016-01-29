@@ -6,8 +6,6 @@
 #
 
 default['proxy'].tap do |proxy|
-
-  #Set api servers for HA
+  # Set api servers for HA
   proxy['api']['servers'] = nil
-
 end

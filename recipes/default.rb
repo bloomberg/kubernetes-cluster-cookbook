@@ -8,8 +8,8 @@
 case node['platform']
 when 'redhat', 'centos', 'fedora'
   yum_package "flannel #{node['kubernetes_cluster']['package']['flannel']['version']}"
-  service "firewalld" do
-    action [ :disable, :stop]
+  service 'firewalld' do
+    action [:disable, :stop]
   end
 end
 

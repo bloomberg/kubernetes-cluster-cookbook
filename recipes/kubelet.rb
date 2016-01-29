@@ -7,7 +7,7 @@
 
 unless Chef::Config[:solo]
 
-cluster_proxy = search(:node, 'tags:"kubernetes.clusterproxy"').first
+  cluster_proxy = search(:node, 'tags:"kubernetes.clusterproxy"').first
 
 end
 
@@ -22,7 +22,7 @@ template "#{node['kubernetes']['secure']['directory']}/kube.config" do
   variables(
     kubernetes_secure_api_port: node['kubernetes']['secure']['apiport'],
     etcd_cert_dir: node['kubernetes']['secure']['directory']
-    )
+  )
   only_if { node['kubernetes']['secure']['enabled'] == 'true' }
 end
 
