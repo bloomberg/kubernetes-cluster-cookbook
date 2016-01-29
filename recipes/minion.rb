@@ -35,6 +35,12 @@ if node['kubernetes']['secure']['enabled'] == 'true'
     group 'kube-services'
     mode '0770'
   end
+  file "#{node['kubernetes']['secure']['directory']}/client.srv.bundle.crt" do
+    content "#{node['kubernetes']['etcd']['client']['cert']}\n#{node['kubernetes']['etcd']['client']['ca']}"
+    owner 'root'
+    group 'kube-services'
+    mode '0770'
+  end
   file "#{node['kubernetes']['secure']['directory']}/client.srv.key" do
     content node['kubernetes']['etcd']['client']['key']
     owner 'root'
