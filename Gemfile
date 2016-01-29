@@ -5,6 +5,7 @@ group :lint do
 end
 
 group :unit do
+  gem 'berkshelf'
   gem 'chefspec'
 end
 
