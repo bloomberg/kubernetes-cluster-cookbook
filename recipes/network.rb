@@ -5,6 +5,8 @@
 # Copyright 2015-2016, Bloomberg Finance L.P.
 #
 
+Chef::Resource::Execute.send(:include, KubernetesCookbook::Helpers)
+
 execute 'getnetwork' do
   command "etcdctl get coreos.com/network/config | sed '/^$/d' > /etc/sysconfig/flannel-network"
   only_if { flannel_network? }
