@@ -20,4 +20,4 @@ module KubernetesCookbook
   end
 end
 
-Chef::Recipe.send(:include, KubernetesCookbook::Helpers)
+Chef::Resource::Execute.send(:include, KubernetesCookbook::Helpers)
