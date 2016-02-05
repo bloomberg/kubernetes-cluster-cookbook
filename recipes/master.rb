@@ -25,6 +25,12 @@ group 'kube-services' do
   action :modify
 end
 
+directory '/etc/kubernetes/manifests' do
+  owner 'root'
+  group 'kube-services'
+  mode '0770'
+end
+
 if node['kubernetes']['secure']['enabled'] == 'true'
   file 'kubernetes::master[client.ca.crt]' do
     path "#{node['kubernetes']['secure']['directory']}/client.ca.crt"
