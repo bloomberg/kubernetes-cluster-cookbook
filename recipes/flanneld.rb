@@ -34,6 +34,6 @@ template '/etc/sysconfig/flanneld' do
     etcd_cert_dir: node['kubernetes']['secure']['directory']
   )
   notifies :restart, 'service[flanneld]', :immediately
-  notifies :run, 'execute[redo-docker-bridge]', :immediately
+  notifies :run, 'execute[redo-docker-bridge]', :delayed
   notifies :restart, 'service[kubelet]', :delayed
 end
