@@ -16,8 +16,9 @@ default['kubernetes']['master'].tap do |master|
   # Get the Kubernetes master hostname
   master['fqdn'] = node['fqdn']
 
-  # Set the ssl cert for API when ['kubernetes']['secure']['enabled'] = True
-  master['apicert'] = nil
+  # Set the source for the podmaster container image
+  # Override this in case of network connectivity issues (eg you are behind a firewall and cannot reach gcr.io)
+  master['podmaster-source'] = 'gcr.io/google_containers/podmaster:1.1'
 end
 
 default['kubernetes']['etcd'].tap do |etcd|
