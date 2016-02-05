@@ -3,8 +3,12 @@
 KUBE_LOGTOSTDERR="--logtostderr=true"
 KUBE_LOG_LEVEL="--v=0"
 KUBE_ALLOW_PRIV="--allow_privileged=false"
-KUBE_MASTER="--master=http://<%= @kubernetes_master %>:<%= @kubernetes_api_port %>"
+
+<% if node['kubernetes']['secure']['enabled'] == 'false' -%>
+KUBE_MASTER="--master=http://127.0.0.1:<%= @kubernetes_api_port %>"
+<% end -%>
 
 <% if node['kubernetes']['secure']['enabled'] == 'true' -%>
-KUBE_OPTIONS="--client-certificate=<%= @etcd_cert_dir %>/client-srv.crt --client-key=<%= @etcd_cert_dir %>/client-srv.key"
+KUBE_OPTIONS="--client-certificate=<%= @etcd_cert_dir %>/client.srv.crt --client-key=<%= @etcd_cert_dir %>/client.srv.key"
+KUBE_MASTER="--master=https://127.0.0.1:<%= @kubernetes_secure_api_port %>"
 <% end -%>
