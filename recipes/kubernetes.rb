@@ -10,6 +10,7 @@ template '/etc/kubernetes/config' do
   source 'kube-config.erb'
   variables(
     kubernetes_master: node['fqdn'],
-    kubernetes_api_port: node['kubernetes']['apiport']
+    kubernetes_api_port: node['kubernetes']['insecure']['apiport'],
+    kubernetes_secure_api_port: node['kubernetes']['secure']['apiport']
   )
 end
