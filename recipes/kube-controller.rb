@@ -5,7 +5,7 @@
 # Copyright 2015-2016, Bloomberg Finance L.P.
 #
 
-template '/etc/kubernetes/inactive-manifests/ontroller-manager.yaml' do
+template '/etc/kubernetes/inactive-manifests/controller-manager.yaml' do
   mode '0640'
   source 'kube-controller-manager.erb'
   variables(
