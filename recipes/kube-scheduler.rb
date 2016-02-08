@@ -11,4 +11,5 @@ template '/etc/kubernetes/inactive-manifests/scheduler.yaml' do
   variables(
     kube_scheduler_image: node['kubernetes']['master']['scheduler-source'],
     kubernetes_api_port: node['kubernetes']['insecure']['apiport']
+  )
 end

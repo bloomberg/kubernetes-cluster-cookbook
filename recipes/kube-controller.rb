@@ -11,4 +11,5 @@ template '/etc/kubernetes/inactive-manifests/controller-manager.yaml' do
   variables(
     kube_controller_manager_image: node['kubernetes']['master']['controller-manager-source'],
     kubernetes_api_port: node['kubernetes']['insecure']['apiport']
+  )
 end

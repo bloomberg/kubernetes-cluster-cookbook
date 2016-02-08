@@ -9,8 +9,8 @@ template '/etc/kubernetes/manifests/podmaster.yaml' do
   mode '0640'
   source 'podmaster.yaml.erb'
   variables(
-  podmaster_image: node['kubernetes']['master']['podmaster-source'],
-  kubernetes_api_port: node['kubernetes']['insecure']['apiport'],
-  kubernetes_secure_api_port: node['kubernetes']['secure']['apiport']
-)
+    podmaster_image: node['kubernetes']['master']['podmaster-source'],
+    kubernetes_api_port: node['kubernetes']['insecure']['apiport'],
+    kubernetes_secure_api_port: node['kubernetes']['secure']['apiport']
+  )
 end
