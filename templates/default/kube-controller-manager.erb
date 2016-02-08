@@ -1,2 +1,59 @@
-# File created by Chef! Any local changes will be overwritten next Chef run!
-# This space intentionally left blank
+apiVersion: v1
+kind: Pod
+metadata:
+  name: kube-controller-manager
+spec:
+  containers:
+  - command:
+    - /bin/sh
+    - -c
+<% if node['kubernetes']['secure']['enabled'] == 'true' -%>
+    - /usr/local/bin/kube-controller-manager --kubeconfig=/etc/kubernetes/secrets/kube.config --v=2 1>>/var/log/kube-controller-manager.log 2>&1
+<% end -%>
+<% if node['kubernetes']['secure']['enabled'] == 'true' -%>
+    - /usr/local/bin/kube-controller-manager --master=127.0.0.1:<%= @kubernetes_api_port %> --v=2 1>>/var/log/kube-controller-manager.log 2>&1
+<% end -%>
+    image: <%= @controller_manager_image %>
+    livenessProbe:
+      httpGet:
+        path: /healthz
+        port: 10252
+      initialDelaySeconds: 15
+      timeoutSeconds: 1
+    name: kube-controller-manager
+    volumeMounts:
+    - mountPath: /etc/kubernetes
+      name: k8s
+      readOnly: true
+    - mountPath: /var/log/kube-controller-manager.log
+      name: logfile
+<% if node['kubernetes']['secure']['enabled'] == 'true' -%>
+    - mountPath: /etc/ssl
+      name: etcssl
+      readOnly: true
+    - mountPath: /usr/lib/ssl
+      name: usrlibssl
+      readOnly: true
+    - mountPath: /usr/local/openssl
+      name: usrlocalopenssl
+      readOnly: true
+<% end -%>
+  hostNetwork: true
+  volumes:
+  - hostPath:
+      path: /etc/kubernetes
+    name: k8s
+  - hostPath:
+      path: /var/log/kube-controller-manager.log
+    name: logfile
+<% if node['kubernetes']['secure']['enabled'] == 'true' -%>
+  - hostPath:
+      path: /etc/ssl
+    name: etcssl
+  - hostPath:
+      path: /usr/lib/ssl
+    name: usrlibssl
+  - hostPath:
+      path: /usr/local/openssl
+    name: usrlocalopenssl
+<% end -%>

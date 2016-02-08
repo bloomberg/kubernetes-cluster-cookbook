@@ -16,9 +16,11 @@ default['kubernetes']['master'].tap do |master|
   # Get the Kubernetes master hostname
   master['fqdn'] = node['fqdn']
 
-  # Set the source for the podmaster container image
+  # Set the source for the podmaster controller-manager, and scheduler container images
   # Override this in case of network connectivity issues (eg you are behind a firewall and cannot reach gcr.io)
   master['podmaster-source'] = 'gcr.io/google_containers/podmaster:1.1'
+  master['scheduler-source'] = 'gcr.io/google_containers/kube-scheduler:34d0b8f8b31e27937327961528739bc9'
+  master['controller-manager-source'] = 'gcr.io/google_containers/kube-controller-manager:fda24638d51a48baa13c35337fcd4793'
 end
 
 default['kubernetes']['etcd'].tap do |etcd|
