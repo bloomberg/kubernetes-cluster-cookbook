@@ -25,6 +25,12 @@ group 'kube-services' do
   action :modify
 end
 
+directory '/etc/kubernetes/inactive-manifests' do
+  owner 'root'
+  group 'kube-services'
+  mode '0770'
+end
+
 directory '/etc/kubernetes/manifests' do
   owner 'root'
   group 'kube-services'
