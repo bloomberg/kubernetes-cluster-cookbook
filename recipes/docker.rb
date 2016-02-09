@@ -9,6 +9,15 @@ service 'docker' do
   action :enable
 end
 
+template '/etc/systemd/system.docker.service.d/http-proxy.conf' do
+  source 'docker-env.erb'
+  variables(
+    docker_proxy: node['docker']['environment']['proxy'],
+    docker_noproxy: node['docker']['environment']['no-proxy']
+  )
+  notifies :run, 'command[docker-reload]', :immediately
+end
+
 template '/etc/sysconfig/docker' do
   mode '0640'
   source 'docker.erb'

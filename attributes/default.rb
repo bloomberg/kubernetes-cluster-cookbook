@@ -20,6 +20,10 @@ default['kubernetes']['secure']['apiport'] = '8443'
 # Set port for Kubelet communication
 default['kubelet']['port'] = '10250'
 
+# Set docker daemon environment settings
+default['docker']['environment']['proxy'] = nil
+default['docker']['environment']['no-proxy'] = nil
+
 # Package versions
 default['kubernetes_cluster']['package']['flannel']['version'] = '>= 0.2.0'
 default['kubernetes_cluster']['package']['docker']['name'] = 'docker'
