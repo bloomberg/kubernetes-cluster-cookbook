@@ -16,7 +16,6 @@ spec:
 <% if node['kubernetes']['secure']['enabled'] == 'false' -%>
     - /usr/local/bin/kube-scheduler --master=127.0.0.1:<%= @kubernetes_api_port %> --v=2 1>>/var/log/kube-scheduler.log 2>&1
 <% end -%>
-      2>&1
     livenessProbe:
       httpGet:
         path: /healthz
