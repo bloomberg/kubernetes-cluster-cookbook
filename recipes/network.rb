@@ -6,7 +6,7 @@
 #
 
 if node['kubernetes']['secure']['enabled'] == 'true'
-  etcdcmd = "etcdctl --cert-file=#{node['kubernetes']['secure']['directory']}/client.srv.crt --key-file=#{node['kubernetes']['secure']['directory']}/client.srv.key --ca-file=#{node['kubernetes']['secure']['directory']}/client.ca.crt"
+  etcdcmd = "etcdctl --peers=https://127.0.0.1:2379 --cert-file=#{node['kubernetes']['secure']['directory']}/client.srv.crt --key-file=#{node['kubernetes']['secure']['directory']}/client.srv.key --ca-file=#{node['kubernetes']['secure']['directory']}/client.ca.crt"
 elsif node['kubernetes']['secure']['enabled'] == 'false'
   etcdcmd = 'etcdctl'
 end

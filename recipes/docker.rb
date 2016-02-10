@@ -13,10 +13,9 @@ execute 'docker-reload' do
   command 'systemctl daemon-reload'
   action :nothing
 end
-
 directory '/etc/systemd/system/docker.service.d'
 
-template '/etc/systemd/system.docker.service.d/http-proxy.conf' do
+template '/etc/systemd/system/docker.service.d/http-proxy.conf' do
   source 'docker-env.erb'
   variables(
     docker_proxy: node['docker']['environment']['proxy'],
