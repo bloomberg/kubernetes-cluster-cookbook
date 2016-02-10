@@ -55,4 +55,4 @@ default['kubernetes']['etcd'].tap do |etcd|
 end
 
 # Tell kubelet not to register on master
-default['kubelet']['register'] = 'false'
+override['kubelet']['register'] = 'false'

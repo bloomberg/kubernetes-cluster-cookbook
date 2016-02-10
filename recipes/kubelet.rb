@@ -29,7 +29,8 @@ template '/etc/kubernetes/kubelet' do
     kubelet_port: node['kubelet']['port'],
     pause_container: node['kubelet']['pause-source'],
     kubernetes_secure_api_port: node['kubernetes']['secure']['apiport'],
-    etcd_cert_dir: node['kubernetes']['secure']['directory']
+    etcd_cert_dir: node['kubernetes']['secure']['directory'],
+    register_node: node['kubelet']['register']
   )
   notifies :restart, 'service[kubelet]', :immediately
 end
