@@ -7,16 +7,8 @@
 
 node.tag('kubernetes.minion')
 
-# Get hostname for kubernetes master DEFAULT REQUIRES CHEF SERVER
 include_recipe 'kubernetes-cluster::default'
 include_recipe 'kubernetes-cluster::proxy'
-
-case node['platform']
-when 'redhat', 'centos', 'fedora'
-  yum_package "#{node['kubernetes_cluster']['package']['docker']['name']} #{node['kubernetes_cluster']['package']['docker']['version']}"
-  yum_package "kubernetes-node #{node['kubernetes_cluster']['package']['kubernetes_node']['version']}"
-  yum_package "bridge-utils #{node['kubernetes_cluster']['package']['bridge_utils']['version']}"
-end
 
 if node['kubernetes']['secure']['enabled'] == 'true'
   group 'kube-services' do

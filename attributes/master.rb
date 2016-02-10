@@ -53,3 +53,6 @@ default['kubernetes']['etcd'].tap do |etcd|
   etcd['client']['cert'] = nil
   etcd['client']['key'] = nil
 end
+
+# Tell kubelet not to register on master
+default['kubelet']['register'] = 'false'

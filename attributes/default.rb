@@ -20,9 +20,25 @@ default['kubernetes']['secure']['apiport'] = '8443'
 # Set port for Kubelet communication
 default['kubelet']['port'] = '10250'
 
-# Set docker daemon environment settings
-default['docker']['environment']['proxy'] = nil
-default['docker']['environment']['no-proxy'] = nil
+# Set pause container source in case of network connectivity issues (eg you are behind a firewall)
+default['kubelet']['pause-source'] = nil
+
+# Set hostname for kubelet
+default['kubelet']['hostname'] = node['fqdn']
+
+default['docker']['environment'].tap do |environment|
+  # Add custom docker registry- optionally insecure
+  environment['docker-registry'] = nil
+  environment['registry-insecure'] = nil
+
+  # Set docker base directory for local storage- make sure this has plenty of space, optimally its own volume
+  # This directory will be created if it does not exist
+  environment['docker-basedir'] = nil
+
+  # Set docker daemon proxy settings
+  environment['proxy'] = nil
+  environment['no-proxy'] = nil
+end
 
 # Package versions
 default['kubernetes_cluster']['package']['flannel']['version'] = '>= 0.2.0'

@@ -19,6 +19,7 @@ ETCD_LISTEN_CLIENT_URLS="https://<%= @etcd_client_name %>:<%= @etcd_client_port 
 ETCD_LISTEN_PEER_URLS="https://<%= @etcd_client_name %>:<%= @etcd_peer_port %>,https://127.0.0.1:<%= @etcd_peer_port %>"
 ETCD_INITIAL_CLUSTER="<% @etcd_members.each do |name| %><%= name %>=https://<%= name %>:<%= @etcd_peer_port %>,<% end -%>"
 ETCD_ADVERTISE_CLIENT_URLS="https://<%= @etcd_client_name %>:<%= @etcd_client_port %>"
+ETCD_INITIAL_ADVERTISE_PEER_URLS="https://<%= @etcd_client_name %>:<%= @etcd_peer_port %>"
 ETCD_PEER_CLIENT_CERT_AUTH="true"
 ETCD_CLIENT_CERT_AUTH="true"
 ETCD_CERT_FILE="<%= @etcd_cert_dir %>/client.srv.crt"

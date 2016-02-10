@@ -24,10 +24,10 @@ template '/etc/kubernetes/kubelet' do
   mode '0640'
   source 'kube-kubelet.erb'
   variables(
-    kubelet_hostname: node['kubernetes']['minion']['kubelet-hostname'],
+    kubelet_hostname: node['kubelet']['hostname'],
     kubernetes_api_port: node['kubernetes']['insecure']['apiport'],
     kubelet_port: node['kubelet']['port'],
-    pause_container: node['kubernetes']['minion']['pause-source'],
+    pause_container: node['kubelet']['pause-source'],
     kubernetes_secure_api_port: node['kubernetes']['secure']['apiport'],
     etcd_cert_dir: node['kubernetes']['secure']['directory']
   )

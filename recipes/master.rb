@@ -16,7 +16,6 @@ when 'redhat', 'centos', 'fedora'
   end
   yum_package "etcd #{node['kubernetes_cluster']['package']['etcd']['version']}"
   yum_package "kubernetes-master #{node['kubernetes_cluster']['package']['kubernetes_master']['version']}"
-  yum_package "#{node['kubernetes_cluster']['package']['docker']['name']} #{node['kubernetes_cluster']['package']['docker']['version']}"
 end
 
 group 'kube-services' do
@@ -81,8 +80,8 @@ include_recipe 'kubernetes-cluster::etcd'
 include_recipe 'kubernetes-cluster::kubernetes'
 include_recipe 'kubernetes-cluster::kube-apiserver'
 include_recipe 'kubernetes-cluster::network'
-include_recipe 'kubernetes-cluster::flannel'
 include_recipe 'kubernetes-cluster::docker'
+include_recipe 'kubernetes-cluster::flanneld'
 include_recipe 'kubernetes-cluster::kubelet'
 include_recipe 'kubernetes-cluster::kube-controller'
 include_recipe 'kubernetes-cluster::kube-scheduler'

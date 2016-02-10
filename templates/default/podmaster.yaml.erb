@@ -12,15 +12,15 @@ spec:
 <% if node['kubernetes']['secure']['enabled'] == 'true' -%>
     - --etcd-servers==https://127.0.0.1:<%= @kubernetes_secure_api_port %>
 <% end -%>
-<% if node['kubernetes']['secure']['enabled'] == 'true' -%>
+<% if node['kubernetes']['secure']['enabled'] == 'false' -%>
     - --etcd-servers=http://127.0.0.1:<%= @kubernetes_api_port %>
 <% end -%>
     - --key=scheduler
-    - --source-file=/kubernetes/kube-scheduler.manifest
-    - --dest-file=/manifests/kube-scheduler.manifest
+    - --source-file=/inactive-manifests/scheduler.manifest
+    - --dest-file=/manifests/scheduler.manifest
     volumeMounts:
-    - mountPath: /kubernetes
-      name: kubernetes
+    - mountPath: /inactive-manifests
+      name: inactive-manifests
       readOnly: true
     - mountPath: /manifests
       name: manifests
@@ -31,23 +31,23 @@ spec:
 <% if node['kubernetes']['secure']['enabled'] == 'true' -%>
     - --etcd-servers==https://127.0.0.1:<%= @kubernetes_secure_api_port %>
 <% end -%>
-<% if node['kubernetes']['secure']['enabled'] == 'true' -%>
+<% if node['kubernetes']['secure']['enabled'] == 'false' -%>
     - --etcd-servers=http://127.0.0.1:<%= @kubernetes_api_port %>
 <% end -%>
     - --key=controller
-    - --source-file=/kubernetes/kube-controller-manager.manifest
-    - --dest-file=/manifests/kube-controller-manager.manifest
+    - --source-file=/inactive-manifests/controller-manager.manifest
+    - --dest-file=/manifests/controller-manager.manifest
     terminationMessagePath: /dev/termination-log
     volumeMounts:
-    - mountPath: /kubernetes
-      name: kubernetes
+    - mountPath: /inactive-manifests
+      name: inactive-manifests
       readOnly: true
     - mountPath: /manifests
       name: manifests
   volumes:
   - hostPath:
       path: /etc/kubernetes/inactive-manifests
-    name: kubernetes
+    name: inactive-manifests
   - hostPath:
       path: /etc/kuberketes/manifests
     name: manifests
