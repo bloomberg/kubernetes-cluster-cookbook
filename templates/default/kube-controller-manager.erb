@@ -8,9 +8,9 @@ spec:
     - /bin/sh
     - -c
 <% if node['kubernetes']['secure']['enabled'] == 'true' -%>
-    - /usr/local/bin/kube-controller-manager --kubeconfig=/etc/kubernetes/secrets/kube.config --v=2 1>>/var/log/kube-controller-manager.log 2>&1
+    - /usr/local/bin/kube-controller-manager --kubeconfig=<%= @etcd_cert_dir %>/kube.config --v=2 1>>/var/log/kube-controller-manager.log 2>&1
 <% end -%>
-<% if node['kubernetes']['secure']['enabled'] == 'true' -%>
+<% if node['kubernetes']['secure']['enabled'] == 'false' -%>
     - /usr/local/bin/kube-controller-manager --master=127.0.0.1:<%= @kubernetes_api_port %> --v=2 1>>/var/log/kube-controller-manager.log 2>&1
 <% end -%>
     image: <%= @controller_manager_image %>
@@ -22,38 +22,20 @@ spec:
       timeoutSeconds: 1
     name: kube-controller-manager
     volumeMounts:
-    - mountPath: /etc/kubernetes
-      name: k8s
-      readOnly: true
-    - mountPath: /var/log/kube-controller-manager.log
-      name: logfile
 <% if node['kubernetes']['secure']['enabled'] == 'true' -%>
-    - mountPath: /etc/ssl
-      name: etcssl
-      readOnly: true
-    - mountPath: /usr/lib/ssl
-      name: usrlibssl
-      readOnly: true
-    - mountPath: /usr/local/openssl
-      name: usrlocalopenssl
+    - mountPath: <%= @etcd_cert_dir %>
+      name: secrets
       readOnly: true
 <% end -%>
+    - mountPath: /var/log/kube-controller-manager.log
+      name: logfile
   hostNetwork: true
   volumes:
+<% if node['kubernetes']['secure']['enabled'] == 'true' -%>
   - hostPath:
-      path: /etc/kubernetes
-    name: k8s
+      path: <%= @etcd_cert_dir %>
+    name: secrets
+<% end -%>
   - hostPath:
       path: /var/log/kube-controller-manager.log
     name: logfile
-<% if node['kubernetes']['secure']['enabled'] == 'true' -%>
-  - hostPath:
-      path: /etc/ssl
-    name: etcssl
-  - hostPath:
-      path: /usr/lib/ssl
-    name: usrlibssl
-  - hostPath:
-      path: /usr/local/openssl
-    name: usrlocalopenssl
-<% end -%>

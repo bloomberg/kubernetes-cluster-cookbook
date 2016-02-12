@@ -10,15 +10,23 @@ spec:
     command:
     - /podmaster
 <% if node['kubernetes']['secure']['enabled'] == 'true' -%>
-    - --etcd-servers==https://127.0.0.1:<%= @kubernetes_secure_api_port %>
+    - --etcd-config=/etc/kubernetes/etcd.client.conf
 <% end -%>
 <% if node['kubernetes']['secure']['enabled'] == 'false' -%>
     - --etcd-servers=http://127.0.0.1:<%= @kubernetes_api_port %>
 <% end -%>
     - --key=scheduler
-    - --source-file=/inactive-manifests/scheduler.manifest
-    - --dest-file=/manifests/scheduler.manifest
+    - --source-file=/inactive-manifests/scheduler.yaml
+    - --dest-file=/manifests/scheduler.yaml
     volumeMounts:
+<% if node['kubernetes']['secure']['enabled'] == 'true' -%>
+    - mountPath: /etc/kubernetes
+      name: kubernetes
+      readOnly: true
+    - mountPath: <%= @etcd_cert_dir %>
+      name: secrets
+      readOnly: true
+<% end -%>
     - mountPath: /inactive-manifests
       name: inactive-manifests
       readOnly: true
@@ -29,22 +37,38 @@ spec:
     command:
     - /podmaster
 <% if node['kubernetes']['secure']['enabled'] == 'true' -%>
-    - --etcd-servers==https://127.0.0.1:<%= @kubernetes_secure_api_port %>
+    - --etcd-config=/etc/kubernetes/etcd.client.conf
 <% end -%>
 <% if node['kubernetes']['secure']['enabled'] == 'false' -%>
     - --etcd-servers=http://127.0.0.1:<%= @kubernetes_api_port %>
 <% end -%>
     - --key=controller
-    - --source-file=/inactive-manifests/controller-manager.manifest
-    - --dest-file=/manifests/controller-manager.manifest
+    - --source-file=/inactive-manifests/controller-manager.yaml
+    - --dest-file=/manifests/controller-manager.yaml
     terminationMessagePath: /dev/termination-log
     volumeMounts:
+<% if node['kubernetes']['secure']['enabled'] == 'true' -%>
+    - mountPath: /etc/kubernetes
+      name: kubernetes
+      readOnly: true
+    - mountPath: <%= @etcd_cert_dir %>
+      name: secrets
+      readOnly: true
+<% end -%>
     - mountPath: /inactive-manifests
       name: inactive-manifests
       readOnly: true
     - mountPath: /manifests
       name: manifests
   volumes:
+<% if node['kubernetes']['secure']['enabled'] == 'true' -%>
+  - hostPath:
+      path: /etc/kubernetes
+    name: kubernetes
+  - hostPath:
+      path: <%= @etcd_cert_dir %>
+    name: secrets
+<% end -%>
   - hostPath:
       path: /etc/kubernetes/inactive-manifests
     name: inactive-manifests

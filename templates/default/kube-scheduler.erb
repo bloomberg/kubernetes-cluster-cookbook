@@ -11,7 +11,7 @@ spec:
     - /bin/sh
     - -c
 <% if node['kubernetes']['secure']['enabled'] == 'true' -%>
-    - /usr/local/bin/kube-scheduler --kubeconfig=/etc/kubernetes/secrets/kube.config --v=2 1>>/var/log/kube-scheduler.log 2>&1
+    - /usr/local/bin/kube-scheduler --kubeconfig=<%= @etcd_cert_dir %>/kube.config --v=2 1>>/var/log/kube-scheduler.log 2>&1
 <% end -%>
 <% if node['kubernetes']['secure']['enabled'] == 'false' -%>
     - /usr/local/bin/kube-scheduler --master=127.0.0.1:<%= @kubernetes_api_port %> --v=2 1>>/var/log/kube-scheduler.log 2>&1
@@ -25,13 +25,17 @@ spec:
     volumeMounts:
     - mountPath: /var/log/kube-scheduler.log
       name: logfile
-    - mountPath: /etc/kubernetes
-      name: k8s
+<% if node['kubernetes']['secure']['enabled'] == 'true' -%>
+    - mountPath: <%= @etcd_cert_dir %>
+      name: secrets
       readOnly: true
+<% end -%>
   volumes:
   - hostPath:
       path: /var/log/kube-scheduler.log
     name: logfile
+<% if node['kubernetes']['secure']['enabled'] == 'true' -%>
   - hostPath:
-      path: /etc/kubernetes
-    name: k8s
+      path: <%= @etcd_cert_dir %>
+    name: secrets
+<% end -%>
