@@ -6,6 +6,7 @@
 #
 
 node.tag('kubernetes.minion')
+node.override['kubelet']['register'] = 'true'
 
 include_recipe 'kubernetes-cluster::default'
 include_recipe 'kubernetes-cluster::proxy'
