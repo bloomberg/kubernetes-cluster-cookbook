@@ -4,8 +4,7 @@
 [![Cookbook Version](https://img.shields.io/cookbook/v/kubernetes-cluster.svg)](https://supermarket.chef.io/cookbooks/kubernetes-cluster)
 [![License](https://img.shields.io/badge/license-Apache_2-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 
-Application cookbook which installs and configures a Kubernetes
-cluster.
+Application cookbook which installs and configures a Kubernetes cluster.
 
 ## Supported Platforms
 - RHEL 7.1+ (CentOS 7.1+)
@@ -67,6 +66,7 @@ Minions:
 - node['kubernetes']['etcd']['client']['key'] - Key matching client certificate
 
 NOTE: Peer and Client CA can be the same. This will allow for far simpler setup. However, you may use a different CA to more closely manage security if desired.
+NOTE: Additional exposed attributes contain notes for usage in the appropriate attributes file.
 
 Example solo.json for master
 ```json
@@ -88,6 +88,18 @@ Example solo.json for master
     },
     "secure": {
       "enabled": "true"
+    },
+    "master": {
+      "podmaster-source": "registry.example.com:5000/podmaster:1.1",
+      "scheduler-source": "registry.example.com:5000/scheduler:1.0.3",
+      "controller-manager-source": "registry.example.com:5000/controller-manager:1.0.3"
+    }
+  },
+  "docker": {
+    "environment": {
+      "docker-registry": "registry.example.com:5000",
+      "registry-insecure": "registry.example.com:5000",
+      "docker-basedir": "/kube/docker"
     }
   },
   "run_list": ["recipe[kubernetes-cluster::master]"]
@@ -110,13 +122,18 @@ Example solo.json for minion
     },
     "secure": {
       "enabled": "true"
-    },
-    "minion": {
-      "pause-source": "internalregistry.docker.example.com:5000/rhel7:pause",
-      "docker-registry": "internalregistry.docker.example.com:5000",
-      "registry-insecure": "internalregistry.docker.example.com:5000",
+    }
+  },
+  "docker": {
+    "environment": {
+      "docker-registry": "registry.example.com:5000",
+      "registry-insecure": "registry.example.com:5000",
       "docker-basedir": "/kube/docker"
     }
+  },
+  "kubelet": {
+    "pause-source": "registry.example.com:5000/pause:base",
+    "register": "true"
   },
   "run_list": ["recipe[kubernetes-cluster::minion]"]
 }
