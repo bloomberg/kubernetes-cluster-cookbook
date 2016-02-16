@@ -11,19 +11,16 @@ end
 
 service 'docker' do
   action :nothing
-  only_if { node.run_list.include?('recipe[kubernetes-cluster::minion]') }
 end
 
 service 'kubelet' do
   action :nothing
-  only_if { node.run_list.include?('recipe[kubernetes-cluster::minion]') }
 end
 
 execute 'redo-docker-bridge' do
   command 'ifconfig docker0 down; brctl delbr docker0'
   action :nothing
   notifies :restart, 'service[docker]', :immediately
-  only_if { node.run_list.include?('recipe[kubernetes-cluster::minion]') }
 end
 
 template '/etc/sysconfig/flanneld' do

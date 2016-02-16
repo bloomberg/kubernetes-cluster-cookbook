@@ -1,2 +1,41 @@
-# File created by Chef! Any local changes will be overwritten next Chef run!
-# This space intentionally left blank
+apiVersion: v1
+kind: Pod
+metadata:
+  name: kube-controller-manager
+spec:
+  containers:
+  - command:
+    - /bin/sh
+    - -c
+<% if node['kubernetes']['secure']['enabled'] == 'true' -%>
+    - /usr/local/bin/kube-controller-manager --kubeconfig=<%= @etcd_cert_dir %>/kube.config --v=2 1>>/var/log/kube-controller-manager.log 2>&1
+<% end -%>
+<% if node['kubernetes']['secure']['enabled'] == 'false' -%>
+    - /usr/local/bin/kube-controller-manager --master=127.0.0.1:<%= @kubernetes_api_port %> --v=2 1>>/var/log/kube-controller-manager.log 2>&1
+<% end -%>
+    image: <%= @controller_manager_image %>
+    livenessProbe:
+      httpGet:
+        path: /healthz
+        port: 10252
+      initialDelaySeconds: 15
+      timeoutSeconds: 1
+    name: kube-controller-manager
+    volumeMounts:
+<% if node['kubernetes']['secure']['enabled'] == 'true' -%>
+    - mountPath: <%= @etcd_cert_dir %>
+      name: secrets
+      readOnly: true
+<% end -%>
+    - mountPath: /var/log/kube-controller-manager.log
+      name: logfile
+  hostNetwork: true
+  volumes:
+<% if node['kubernetes']['secure']['enabled'] == 'true' -%>
+  - hostPath:
+      path: <%= @etcd_cert_dir %>
+    name: secrets
+<% end -%>
+  - hostPath:
+      path: /var/log/kube-controller-manager.log
+    name: logfile

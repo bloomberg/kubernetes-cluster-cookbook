@@ -5,14 +5,20 @@
 # Copyright 2015-2016, Bloomberg Finance L.P.
 #
 
+if node['kubernetes']['secure']['enabled'] == 'true'
+  etcdcmd = "etcdctl --peers=https://127.0.0.1:2379 --cert-file=#{node['kubernetes']['secure']['directory']}/client.srv.crt --key-file=#{node['kubernetes']['secure']['directory']}/client.srv.key --ca-file=#{node['kubernetes']['secure']['directory']}/client.ca.crt"
+elsif node['kubernetes']['secure']['enabled'] == 'false'
+  etcdcmd = 'etcdctl'
+end
+
 execute 'getnetwork' do
-  command "etcdctl get coreos.com/network/config | sed '/^$/d' > /etc/sysconfig/flannel-network"
+  command "#{etcdcmd} get coreos.com/network/config | sed '/^$/d' > /etc/sysconfig/flannel-network"
   only_if { flannel_network? }
   action :nothing
 end.run_action(:run)
 
 execute 'setnetwork' do
-  command 'etcdctl set coreos.com/network/config < /etc/sysconfig/flannel-network'
+  command "#{etcdcmd} set coreos.com/network/config < /etc/sysconfig/flannel-network"
   action :nothing
 end
 

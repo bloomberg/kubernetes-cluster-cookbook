@@ -3,7 +3,7 @@
     "machines": [ "https://<%= @kubernetes_master %>:<%= @etcd_client_port %>" ]
   },
   "config": {
-    "certFile": "<%= @etcd_cert_dir %>/client.srv.cert",
+    "certFile": "<%= @etcd_cert_dir %>/client.srv.crt",
     "keyFile": "<%= @etcd_cert_dir %>/client.srv.key"
    }
 }

@@ -1,7 +1,7 @@
 # File created by Chef! Any local changes will be overwritten next Chef run!
 
 KUBE_LOGTOSTDERR="--logtostderr=true"
-KUBE_LOG_LEVEL="--v=0"
+KUBE_LOG_LEVEL="--v=<%= @kubernetes_log_level %>"
 KUBE_ALLOW_PRIV="--allow_privileged=false"
 
 <% if node['kubernetes']['secure']['enabled'] == 'false' -%>

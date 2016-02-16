@@ -5,11 +5,11 @@ KUBELET_HOSTNAME="--hostname_override=<%= @kubelet_hostname %>"
 # Secure kubelet configuration parameters go under here when node['kubernetes']['secure']['enabled'] == 'false'
 <% if node['kubernetes']['secure']['enabled'] == 'false' -%>
 KUBELET_API_SERVER="--api_servers=http://127.0.0.1:<%= @kubernetes_api_port %>"
-KUBELET_ARGS="--register-node=true <% if @pause_container -%>--pod_infra_container_image=<%= @pause_container %><% end -%>"
+KUBELET_ARGS="--register-node=<%= @register_node %> <% if @pause_container -%>--pod_infra_container_image=<%= @pause_container %><% end -%>"
 <% end -%>
 
 # Secure kubelet configuration parameters go under here when node['kubernetes']['secure']['enabled'] == 'true'
 <% if node['kubernetes']['secure']['enabled'] == 'true' -%>
 KUBELET_API_SERVER="--api_servers=https://127.0.0.1:<%= @kubernetes_secure_api_port %>"
-KUBELET_ARGS="--register-node=true <% if @pause_container -%>--pod_infra_container_image=<%= @pause_container %><% end -%> --kubeconfig=<%= @etcd_cert_dir %>/kube.config --tls-cert-file=<%= @etcd_cert_dir %>/client.srv.bundle.crt --tls-private-key-file=<%= @etcd_cert_dir %>/client.srv.key"
+KUBELET_ARGS="--config=/etc/kubernetes/manifests --register-node=<%= @register_node %> <% if @pause_container -%>--pod_infra_container_image=<%= @pause_container %><% end -%> --kubeconfig=<%= @etcd_cert_dir %>/kube.config <% if node['kubelet']['register'] == 'true' -%>--tls-cert-file=<%= @etcd_cert_dir %>/client.srv.bundle.crt --tls-private-key-file=<%= @etcd_cert_dir %>/client.srv.key<% end -%>"
 <% end -%>

@@ -16,13 +16,24 @@ when 'redhat', 'centos', 'fedora'
   end
   yum_package "etcd #{node['kubernetes_cluster']['package']['etcd']['version']}"
   yum_package "kubernetes-master #{node['kubernetes_cluster']['package']['kubernetes_master']['version']}"
-  yum_package "#{node['kubernetes_cluster']['package']['docker']['name']} #{node['kubernetes_cluster']['package']['docker']['version']}"
 end
 
 group 'kube-services' do
   only_if { node['kubernetes']['secure']['enabled'] == 'true' }
   members %w(etcd kube)
   action :modify
+end
+
+directory '/etc/kubernetes/inactive-manifests' do
+  owner 'root'
+  group 'kube-services'
+  mode '0770'
+end
+
+directory '/etc/kubernetes/manifests' do
+  owner 'root'
+  group 'kube-services'
+  mode '0770'
 end
 
 if node['kubernetes']['secure']['enabled'] == 'true'
@@ -68,6 +79,10 @@ end
 include_recipe 'kubernetes-cluster::etcd'
 include_recipe 'kubernetes-cluster::kubernetes'
 include_recipe 'kubernetes-cluster::kube-apiserver'
+include_recipe 'kubernetes-cluster::network'
+include_recipe 'kubernetes-cluster::docker'
+include_recipe 'kubernetes-cluster::flanneld'
+include_recipe 'kubernetes-cluster::kubelet'
 include_recipe 'kubernetes-cluster::kube-controller'
 include_recipe 'kubernetes-cluster::kube-scheduler'
-include_recipe 'kubernetes-cluster::network'
+include_recipe 'kubernetes-cluster::podmaster'
