@@ -11,6 +11,8 @@ Application cookbook which installs and configures a Kubernetes cluster.
 
 ## Basic Usage
 
+[See detailed step by step instructions in the wiki here.](https://github.com/bloomberg/kubernetes-cluster-cookbook/wiki/Beginners-Guide)
+
 Configure masters using kubernetes-cluster::master
 Configure minions using kubernetes-cluster::minion
 Configure Docker registry using kubernetes-cluster::registry
