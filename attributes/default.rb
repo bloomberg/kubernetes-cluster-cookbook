@@ -40,6 +40,9 @@ default['docker']['environment'].tap do |environment|
   environment['no-proxy'] = nil
 end
 
+# Set kubelet log level- 0 is lowest
+default['kubernetes']['log']['level'] = '5'
+
 # Package versions
 default['kubernetes_cluster']['package']['flannel']['version'] = '>= 0.2.0'
 default['kubernetes_cluster']['package']['docker']['name'] = 'docker'

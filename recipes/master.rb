@@ -19,7 +19,6 @@ when 'redhat', 'centos', 'fedora'
 end
 
 group 'kube-services' do
-  only_if { node['kubernetes']['secure']['enabled'] == 'true' }
   members %w(etcd kube)
   action :modify
 end

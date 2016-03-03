@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project will adhere to strict
 [Semantic Versioning](http://semver.org/) starting at v1.0.0.
 
+## 1.0.4
+- Bugfix with proxy in insecure mode
+- Always create kube-services group
+- Added default attribute for kubelet log lefel
+
 ## 1.0.3
 - Bugfix with kube-proxy deployment
 - Fully tested in both secure and insecure mode for HA setup using Kubernetes 1.0.3 and Docker 1.8.2
