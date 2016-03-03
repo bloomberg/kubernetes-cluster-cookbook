@@ -16,9 +16,7 @@ when 'redhat', 'centos', 'fedora'
   end
 end
 
-group 'kube-services' do
-  only_if { node['kubernetes']['secure']['enabled'] == 'true' }
-end
+group 'kube-services'
 
 directory node['kubernetes']['secure']['directory'] do
   only_if { node['kubernetes']['secure']['enabled'] == 'true' }
