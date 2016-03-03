@@ -59,7 +59,7 @@ backend etcd_backend
 
 frontend api_frontend
         bind 127.0.0.1:<%= @kubernetes_api_port %>
-        option forwardor
+        option forwardfor
         default_backend api_backend
 
 frontend etcd_frontend
