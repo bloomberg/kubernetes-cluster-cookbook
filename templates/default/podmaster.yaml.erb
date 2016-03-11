@@ -13,7 +13,7 @@ spec:
     - --etcd-config=/etc/kubernetes/etcd.client.conf
 <% end -%>
 <% if node['kubernetes']['secure']['enabled'] == 'false' -%>
-    - --etcd-servers=http://127.0.0.1:<%= @kubernetes_api_port %>
+    - --etcd-servers=http://127.0.0.1:<%= @etcd_client_port %>
 <% end -%>
     - --key=scheduler
     - --source-file=/inactive-manifests/scheduler.yaml
@@ -40,7 +40,7 @@ spec:
     - --etcd-config=/etc/kubernetes/etcd.client.conf
 <% end -%>
 <% if node['kubernetes']['secure']['enabled'] == 'false' -%>
-    - --etcd-servers=http://127.0.0.1:<%= @kubernetes_api_port %>
+    - --etcd-servers=http://127.0.0.1:<%= @etcd_client_port %>
 <% end -%>
     - --key=controller
     - --source-file=/inactive-manifests/controller-manager.yaml

@@ -3,6 +3,9 @@ All notable changes to this project will be documented in this file.
 This project will adhere to strict
 [Semantic Versioning](http://semver.org/) starting at v1.0.0.
 
+## 1.0.7
+- Fix bug with insecure podmaster connecting to wrong port
+
 ## 1.0.6
 - Make docker secrets and ssl certificate writeout as sensitive to prevent stdout scraping of credentials
 
