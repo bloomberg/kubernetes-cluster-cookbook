@@ -10,7 +10,7 @@ template '/etc/kubernetes/manifests/podmaster.yaml' do
   source 'podmaster.yaml.erb'
   variables(
     podmaster_image: node['kubernetes']['master']['podmaster-source'],
-    kubernetes_api_port: node['kubernetes']['insecure']['apiport'],
+    etcd_client_port: node['kubernetes']['etcd']['clientport'],
     etcd_cert_dir: node['kubernetes']['secure']['directory']
   )
 end

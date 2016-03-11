@@ -15,6 +15,20 @@ execute 'docker-reload' do
 end
 directory '/etc/systemd/system/docker.service.d'
 
+if node['docker']['secure']['registry']
+  directory '/root/.docker'
+  template '/root/.docker/config.json' do
+    source 'dockerconfig.erb'
+    variables(
+      docker_registry: node['docker']['secure']['registry'],
+      docker_secret: node['docker']['secure']['secret'],
+      docker_email: node['docker']['secure']['email']
+    )
+    notifies :restart, 'service[docker]', :delayed
+    sensitive true
+  end
+end
+
 template '/etc/systemd/system/docker.service.d/http-proxy.conf' do
   source 'docker-env.erb'
   variables(

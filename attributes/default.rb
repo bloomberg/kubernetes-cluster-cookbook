@@ -40,6 +40,11 @@ default['docker']['environment'].tap do |environment|
   environment['no-proxy'] = nil
 end
 
+# Set optional docker registry credentials
+default['docker']['secure']['registry'] = nil
+default['docker']['secure']['secret'] = nil
+default['docker']['secure']['email'] = nil
+
 # Set kubelet log level- 0 is lowest
 default['kubernetes']['log']['level'] = '5'
 

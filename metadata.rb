@@ -4,7 +4,7 @@ maintainer_email 'drapenchuk@bloomberg.net'
 license 'Apache 2.0'
 description 'Application cookbook for installing and configuring a Kubernetes cluster.'
 long_description 'Application cookbook for installing and configuring a Kubernetes cluster.'
-version '1.0.4'
+version '1.0.7'
 
 %w(centos redhat).each do |name|
   supports name, '~> 7.1'
