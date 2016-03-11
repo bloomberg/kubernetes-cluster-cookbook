@@ -42,36 +42,42 @@ if node['kubernetes']['secure']['enabled'] == 'true'
     owner 'root'
     group 'kube-services'
     mode '0770'
+    sensitive true
   end
   file "#{node['kubernetes']['secure']['directory']}/client.srv.crt" do
     content node['kubernetes']['etcd']['peer']['cert']
     owner 'root'
     group 'kube-services'
     mode '0770'
+    sensitive true
   end
   file "#{node['kubernetes']['secure']['directory']}/client.srv.key" do
     content node['kubernetes']['etcd']['peer']['key']
     owner 'root'
     group 'kube-services'
     mode '0770'
+    sensitive true
   end
   file "#{node['kubernetes']['secure']['directory']}/peer.ca.crt" do
     content node['kubernetes']['etcd']['peer']['ca']
     owner 'root'
     group 'kube-services'
     mode '0770'
+    sensitive true
   end
   file "#{node['kubernetes']['secure']['directory']}/peer.srv.crt" do
     content node['kubernetes']['etcd']['peer']['cert']
     owner 'root'
     group 'kube-services'
     mode '0770'
+    sensitive true
   end
   file "#{node['kubernetes']['secure']['directory']}/peer.srv.key" do
     content node['kubernetes']['etcd']['peer']['key']
     owner 'root'
     group 'kube-services'
     mode '0770'
+    sensitive true
   end
 end
 

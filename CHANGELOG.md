@@ -3,6 +3,12 @@ All notable changes to this project will be documented in this file.
 This project will adhere to strict
 [Semantic Versioning](http://semver.org/) starting at v1.0.0.
 
+## 1.0.6
+- Make docker secrets and ssl certificate writeout as sensitive to prevent stdout scraping of credentials
+
+## 1.0.5
+- Add ability to set docker registry credentials for pullling from secured registry
+
 ## 1.0.4
 - Bugfix with proxy in insecure mode
 - Always create kube-services group
