@@ -3,6 +3,9 @@ All notable changes to this project will be documented in this file.
 This project will adhere to strict
 [Semantic Versioning](http://semver.org/) starting at v1.0.0.
 
+## 1.1.0
+- Able to configure multiple registries in docker config
+
 ## 1.0.7
 - Fix bug with insecure podmaster connecting to wrong port
 
