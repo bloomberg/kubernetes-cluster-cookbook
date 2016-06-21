@@ -21,9 +21,9 @@ template '/etc/sysconfig/docker-registry' do
   mode '0640'
   source 'docker-registry.erb'
   variables(
-    registry_port: node['docker']['registry']['port'],
-    registry_workers: node['docker']['registry']['workers'],
-    registry_storage: node['docker']['registry']['storage']
+    registry_port: node['kubernetes']['registry']['port'],
+    registry_workers: node['kubernetes']['registry']['workers'],
+    registry_storage: node['kubernetes']['registry']['storage']
   )
   notifies :restart, 'service[docker-registry]', :immediately
 end
