@@ -5,7 +5,7 @@ notifications:
   slack: bloomberg-rnd:BvYmxrV9xj902XWTRNrkLNkR
 script: bundle exec rake travis
 rvm:
-  - 2.2
+  - 2.2.5
 branches:
   only:
     - master
