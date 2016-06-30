@@ -16,33 +16,19 @@ if node['kubernetes']['secure']['enabled'] == 'true'
     members ['kube']
     action :modify
   end
-  file "#{node['kubernetes']['secure']['directory']}/client.ca.crt" do
-    content node['kubernetes']['etcd']['client']['ca']
-    owner 'root'
-    group 'kube-services'
-    mode '0770'
-    sensitive true
-  end
-  file "#{node['kubernetes']['secure']['directory']}/client.srv.crt" do
-    content node['kubernetes']['etcd']['client']['cert']
-    owner 'root'
-    group 'kube-services'
-    mode '0770'
-    sensitive true
-  end
-  file "#{node['kubernetes']['secure']['directory']}/client.srv.bundle.crt" do
-    content "#{node['kubernetes']['etcd']['client']['cert']}\n#{node['kubernetes']['etcd']['client']['ca']}"
-    owner 'root'
-    group 'kube-services'
-    mode '0770'
-    sensitive true
-  end
-  file "#{node['kubernetes']['secure']['directory']}/client.srv.key" do
-    content node['kubernetes']['etcd']['client']['key']
-    owner 'root'
-    group 'kube-services'
-    mode '0770'
-    sensitive true
+  {
+    "#{node['kubernetes']['secure']['directory']}/client.ca.crt" => node['kubernetes']['etcd']['client']['ca'],
+    "#{node['kubernetes']['secure']['directory']}/client.srv.crt" => node['kubernetes']['etcd']['client']['cert'],
+    "#{node['kubernetes']['secure']['directory']}/client.srv.bundle.crt" => "#{node['kubernetes']['etcd']['client']['cert']}\n#{node['kubernetes']['etcd']['client']['ca']}",
+    "#{node['kubernetes']['secure']['directory']}/client.srv.key" => node['kubernetes']['etcd']['client']['key']
+  }.each do |filepath, contents|
+    file filepath do
+      content contents
+      owner 'root'
+      group 'kube-services'
+      mode '0770'
+      sensitive true
+    end
   end
 end
 
