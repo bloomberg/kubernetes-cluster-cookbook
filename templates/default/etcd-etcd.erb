@@ -6,8 +6,8 @@ ETCD_INITIAL_CLUSTER_STATE="new"
 ETCD_INITIAL_CLUSTER_TOKEN="<%= @etcd_client_token %>"
 
 <% if node['kubernetes']['secure']['enabled'] == 'false' -%>
-ETCD_LISTEN_CLIENT_URLS="http://<%= @etcd_client_name %>:<%= @etcd_client_port %>,http://127.0.0.1:<%= @etcd_client_port %>"
-ETCD_LISTEN_PEER_URLS="http://<%= @etcd_client_name %>:<%= @etcd_peer_port %>,http://127.0.0.1:<%= @etcd_peer_port %>"
+ETCD_LISTEN_CLIENT_URLS="http://<%= @etcd_bind_address %>:<%= @etcd_client_port %><% if @etcd_bind_address != '0.0.0.0' %>,http://<%= @etcd_client_name %>:<%= @etcd_client_port %><% end -%>"
+ETCD_LISTEN_PEER_URLS="http://<%= @etcd_bind_address %>:<%= @etcd_peer_port %><% if @etcd_bind_address != '0.0.0.0' %>,http://<%= @etcd_client_name %>:<%= @etcd_peer_port %><% end -%>"
 ETCD_ADVERTISE_CLIENT_URLS="http://<%= @etcd_client_name %>:<%= @etcd_client_port %>"
 ETCD_INITIAL_CLUSTER="<% @etcd_members.each do |name| %><%= name %>=http://<%= name %>:<%= @etcd_peer_port %>,<% end -%>"
 ETCD_INITIAL_ADVERTISE_PEER_URLS="http://<%= @etcd_client_name %>:<%= @etcd_peer_port %>"
@@ -15,8 +15,8 @@ ETCD_INITIAL_ADVERTISE_PEER_URLS="http://<%= @etcd_client_name %>:<%= @etcd_peer
 
 # Secure ETCD configuration parameters go under here when node['kubernetes']['secure']['enabled'] == 'true'
 <% if node['kubernetes']['secure']['enabled'] == 'true' -%>
-ETCD_LISTEN_CLIENT_URLS="https://<%= @etcd_client_name %>:<%= @etcd_client_port %>,https://127.0.0.1:<%= @etcd_client_port %>"
-ETCD_LISTEN_PEER_URLS="https://<%= @etcd_client_name %>:<%= @etcd_peer_port %>,https://127.0.0.1:<%= @etcd_peer_port %>"
+ETCD_LISTEN_CLIENT_URLS="https://<%= @etcd_bind_address %>:<%= @etcd_client_port %><% if @etcd_bind_address != '0.0.0.0' %>,https://<%= @etcd_client_name %>:<%= @etcd_client_port %><% end -%>"
+ETCD_LISTEN_PEER_URLS="https://<%= @etcd_bind_address %>:<%= @etcd_peer_port %><% if @etcd_bind_address != '0.0.0.0' %>,https://<%= @etcd_client_name %>:<%= @etcd_peer_port %><% end -%>"
 ETCD_INITIAL_CLUSTER="<% @etcd_members.each do |name| %><%= name %>=https://<%= name %>:<%= @etcd_peer_port %>,<% end -%>"
 ETCD_ADVERTISE_CLIENT_URLS="https://<%= @etcd_client_name %>:<%= @etcd_client_port %>"
 ETCD_INITIAL_ADVERTISE_PEER_URLS="https://<%= @etcd_client_name %>:<%= @etcd_peer_port %>"

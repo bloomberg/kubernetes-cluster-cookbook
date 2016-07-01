@@ -30,6 +30,7 @@ default['kubernetes']['etcd'].tap do |etcd|
 
   # etcd client name for etcd membership
   etcd['clientname'] = node['fqdn']
+  etcd['bind_address'] = '127.0.0.1'
 
   # etcd directory for data storage
   etcd['basedir'] = '/var/lib/etcd'

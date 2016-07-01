@@ -33,7 +33,8 @@ template '/etc/etcd/etcd.conf' do
     etcd_client_port: node['kubernetes']['etcd']['clientport'],
     etcd_peer_port: node['kubernetes']['etcd']['peerport'],
     etcd_members: node['kubernetes']['etcd']['members'],
-    etcd_cert_dir: node['kubernetes']['secure']['directory']
+    etcd_cert_dir: node['kubernetes']['secure']['directory'],
+    etcd_bind_address: node['kubernetes']['etcd']['bind_address']
   )
   notifies :restart, 'service[etcd]', :immediately
 end
