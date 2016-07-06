@@ -1,15 +1,11 @@
 # File created by Chef! Any local changes will be overwritten next Chef run!
 
-KUBELET_HOSTNAME="--hostname_override=<%= @kubelet_hostname %>"
+KUBELET_HOSTNAME="--hostname-override=<%= @kubelet_hostname %>"
 
-# Secure kubelet configuration parameters go under here when node['kubernetes']['secure']['enabled'] == 'false'
-<% if node['kubernetes']['secure']['enabled'] == 'false' -%>
-KUBELET_API_SERVER="--api_servers=http://127.0.0.1:<%= @kubernetes_api_port %>"
-KUBELET_ARGS="--config=/etc/kubernetes/manifests --register-node=<%= @register_node %> <% if @pause_container -%>--pod_infra_container_image=<%= @pause_container %><% end -%>"
+<% if node['kubernetes']['secure']['enabled'] -%>
+KUBELET_API_SERVER="--api-servers=https://<%= @kubernetes_secure_api_host %>:<%= @kubernetes_secure_api_port %>"
+<% else -%>
+KUBELET_API_SERVER="--api-servers=http://<%= @kubernetes_api_host %>:<%= @kubernetes_api_port %>"
 <% end -%>
 
-# Secure kubelet configuration parameters go under here when node['kubernetes']['secure']['enabled'] == 'true'
-<% if node['kubernetes']['secure']['enabled'] == 'true' -%>
-KUBELET_API_SERVER="--api_servers=https://127.0.0.1:<%= @kubernetes_secure_api_port %>"
-KUBELET_ARGS="--config=/etc/kubernetes/manifests --register-node=<%= @register_node %> <% if @pause_container -%>--pod_infra_container_image=<%= @pause_container %><% end -%> --kubeconfig=<%= @etcd_cert_dir %>/kube.config <% if node['kubelet']['register'] == 'true' -%>--tls-cert-file=<%= @etcd_cert_dir %>/client.srv.bundle.crt --tls-private-key-file=<%= @etcd_cert_dir %>/client.srv.key<% end -%>"
-<% end -%>
+KUBELET_ARGS="<%= @kubelet_args %>"

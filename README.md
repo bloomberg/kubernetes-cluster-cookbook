@@ -8,6 +8,7 @@ Application cookbook which installs and configures a Kubernetes cluster.
 
 ## Supported Platforms
 - RHEL 7.1+ (CentOS 7.1+)
+- Kubernetes 1.3+
 
 ## Basic Usage
 
@@ -50,7 +51,7 @@ Example solo.json for minion
 
 As well as configuring a simple Kubernetes cluster, this cookbook also allows for far more advanced configurations. These configurations range from changing flannel network layout, to enabling secure communications, and adding additional Docker regestries. Secure mode will configure SSL and TLS connections for all endpoints for etcd and Kubernetes. This is HIGHLY recommended for production-like purposes. This will require large amounts of prep work. You can also set URLs for additional Docker registries for the minions to get container images from- as well as configuring said registry.
 
-First, set node['kubernetes']['secure']['enabled'] = 'true' and read below:
+First, set node['kubernetes']['secure']['enabled'] = true and read below:
 
 I highly recommend you use a tool like CFSSL (CloudFlare SSL) to create your certificates, check out https://www.digitalocean.com/community/tutorials/how-to-secure-your-coreos-cluster-with-tls-ssl-and-firewall-rules and start at "Use CFSSL to Generate Self-Signed Certificates"
 

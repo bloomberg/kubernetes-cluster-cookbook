@@ -9,7 +9,7 @@ node.tag('kubernetes.proxy')
 
 case node['platform']
 when 'redhat', 'centos', 'fedora'
-  yum_package "haproxy #{node['kubernetes_cluster']['package']['haproxy']['version']}"
+  yum_package "haproxy #{node['kubernetes']['package']['haproxy']['version']}"
 end
 
 service 'haproxy' do

@@ -2,19 +2,11 @@
 
 ETCD_NAME="<%= @etcd_client_name %>"
 ETCD_DATA_DIR="<%= @etcd_base_dir %>/<%= @etcd_client_name %>.etcd"
-ETCD_INITIAL_CLUSTER_STATE="new"
+ETCD_INITIAL_CLUSTER_STATE="<%= @etcd_cluster_state %>"
 ETCD_INITIAL_CLUSTER_TOKEN="<%= @etcd_client_token %>"
 
-<% if node['kubernetes']['secure']['enabled'] == 'false' -%>
-ETCD_LISTEN_CLIENT_URLS="http://<%= @etcd_bind_address %>:<%= @etcd_client_port %><% if @etcd_bind_address != '0.0.0.0' %>,http://<%= @etcd_client_name %>:<%= @etcd_client_port %><% end -%>"
-ETCD_LISTEN_PEER_URLS="http://<%= @etcd_bind_address %>:<%= @etcd_peer_port %><% if @etcd_bind_address != '0.0.0.0' %>,http://<%= @etcd_client_name %>:<%= @etcd_peer_port %><% end -%>"
-ETCD_ADVERTISE_CLIENT_URLS="http://<%= @etcd_client_name %>:<%= @etcd_client_port %>"
-ETCD_INITIAL_CLUSTER="<% @etcd_members.each do |name| %><%= name %>=http://<%= name %>:<%= @etcd_peer_port %>,<% end -%>"
-ETCD_INITIAL_ADVERTISE_PEER_URLS="http://<%= @etcd_client_name %>:<%= @etcd_peer_port %>"
-<% end -%>
-
-# Secure ETCD configuration parameters go under here when node['kubernetes']['secure']['enabled'] == 'true'
-<% if node['kubernetes']['secure']['enabled'] == 'true' -%>
+# Secure ETCD configuration parameters go under here when node['kubernetes']['secure']['enabled'] is true
+<% if node['kubernetes']['secure']['enabled'] -%>
 ETCD_LISTEN_CLIENT_URLS="https://<%= @etcd_bind_address %>:<%= @etcd_client_port %><% if @etcd_bind_address != '0.0.0.0' %>,https://<%= @etcd_client_name %>:<%= @etcd_client_port %><% end -%>"
 ETCD_LISTEN_PEER_URLS="https://<%= @etcd_bind_address %>:<%= @etcd_peer_port %><% if @etcd_bind_address != '0.0.0.0' %>,https://<%= @etcd_client_name %>:<%= @etcd_peer_port %><% end -%>"
 ETCD_INITIAL_CLUSTER="<% @etcd_members.each do |name| %><%= name %>=https://<%= name %>:<%= @etcd_peer_port %>,<% end -%>"
@@ -28,4 +20,14 @@ ETCD_TRUSTED_CA_FILE="<%= @etcd_cert_dir %>/client.ca.crt"
 ETCD_PEER_CA_FILE="<%= @etcd_cert_dir %>/peer.ca.crt"
 ETCD_PEER_CERT_FILE="<%= @etcd_cert_dir %>/peer.srv.crt"
 ETCD_PEER_KEY_FILE="<%= @etcd_cert_dir %>/peer.srv.key"
+ETCD_HEARTBEAT_INTERVAL="<%= @etcd_heartbeat_interval %>"
+ETCD_ELECTION_TIMEOUT="<%= @etcd_election_timeout %>"
+<% else -%>
+ETCD_LISTEN_CLIENT_URLS="http://<%= @etcd_bind_address %>:<%= @etcd_client_port %><% if @etcd_bind_address != '0.0.0.0' %>,http://<%= @etcd_client_name %>:<%= @etcd_client_port %><% end -%>"
+ETCD_LISTEN_PEER_URLS="http://<%= @etcd_bind_address %>:<%= @etcd_peer_port %><% if @etcd_bind_address != '0.0.0.0' %>,http://<%= @etcd_client_name %>:<%= @etcd_peer_port %><% end -%>"
+ETCD_ADVERTISE_CLIENT_URLS="http://<%= @etcd_client_name %>:<%= @etcd_client_port %>"
+ETCD_INITIAL_CLUSTER="<% @etcd_members.each do |name| %><%= name %>=http://<%= name %>:<%= @etcd_peer_port %>,<% end -%>"
+ETCD_INITIAL_ADVERTISE_PEER_URLS="http://<%= @etcd_client_name %>:<%= @etcd_peer_port %>"
+ETCD_HEARTBEAT_INTERVAL="<%= @etcd_heartbeat_interval %>"
+ETCD_ELECTION_TIMEOUT="<%= @etcd_election_timeout %>"
 <% end -%>

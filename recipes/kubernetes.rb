@@ -13,6 +13,7 @@ template '/etc/kubernetes/config' do
     kubernetes_master: node['fqdn'],
     kubernetes_api_port: node['kubernetes']['insecure']['apiport'],
     kubernetes_secure_api_port: node['kubernetes']['secure']['apiport'],
-    etcd_cert_dir: node['kubernetes']['secure']['directory']
+    etcd_cert_dir: node['kubernetes']['secure']['directory'],
+    allow_privileged: node['kubernetes']['allow_privileged']
   )
 end

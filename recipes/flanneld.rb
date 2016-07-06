@@ -28,6 +28,7 @@ template '/etc/sysconfig/flanneld' do
   source 'flannel-flanneld.erb'
   variables(
     etcd_client_port: node['kubernetes']['etcd']['clientport'],
+    etcd_client_host: node['kubernetes']['etcd']['clienthost'],
     etcd_cert_dir: node['kubernetes']['secure']['directory']
   )
   notifies :restart, 'service[flanneld]', :immediately
