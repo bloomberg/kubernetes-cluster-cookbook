@@ -19,8 +19,10 @@ template '/etc/kubernetes/etcd.client.conf' do
     kubernetes_master: node['kubernetes']['master']['fqdn'],
     etcd_client_port: node['kubernetes']['etcd']['clientport']
   )
-  only_if { node['kubernetes']['secure']['enabled'] == 'true' }
+  only_if { node['kubernetes']['secure']['enabled'] }
 end
+
+kubernetes_api_args = node['kubernetes']['api']['args'].collect {| key, value | "#{key}=#{value}" }
 
 template '/etc/kubernetes/apiserver' do
   mode '0640'
@@ -32,7 +34,8 @@ template '/etc/kubernetes/apiserver' do
     kubernetes_master: node['kubernetes']['master']['fqdn'],
     kubernetes_network: node['kubernetes']['master']['service-network'],
     kubelet_port: node['kubelet']['port'],
-    etcd_cert_dir: node['kubernetes']['secure']['directory']
+    etcd_cert_dir: node['kubernetes']['secure']['directory'],
+    kubernetes_api_args: kubernetes_api_args.join(' ')
   )
-  notifies :restart, 'service[kube-apiserver]', :immediately
+  notifies :restart, 'service[kube-apiserver]', :delayed
 end

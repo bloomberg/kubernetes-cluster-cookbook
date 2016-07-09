@@ -21,21 +21,37 @@ default['kubernetes']['master'].tap do |master|
   master['podmaster-source'] = 'gcr.io/google_containers/podmaster:1.1'
   master['scheduler-source'] = 'gcr.io/google_containers/kube-scheduler:34d0b8f8b31e27937327961528739bc9'
   master['controller-manager-source'] = 'gcr.io/google_containers/kube-controller-manager:fda24638d51a48baa13c35337fcd4793'
+  master['use_etc_config'] = true
+
+  master['enabled_recipes'] = %w(
+      etcd
+      kubernetes
+      kube-apiserver
+      network
+      docker
+      flanneld
+      kubelet
+      kube-controller
+      kube-scheduler
+    )
 end
 
 default['kubernetes']['etcd'].tap do |etcd|
   # etcd client and peer communication ports
   etcd['clientport'] = '2379'
+  etcd['clienthost'] = '127.0.0.1'
   etcd['peerport'] = '2380'
 
   # etcd client name for etcd membership
   etcd['clientname'] = node['fqdn']
+  etcd['bind_address'] = '127.0.0.1'
 
   # etcd directory for data storage
   etcd['basedir'] = '/var/lib/etcd'
 
   # etcd token for initial cluster creation
   etcd['token'] = 'newtoken'
+  etcd['clusterstate'] = 'new'
 
   # List of etcd members
   # This defaults to chef server search capabilities in etcd.rb unless run in chef solo mode
@@ -43,16 +59,9 @@ default['kubernetes']['etcd'].tap do |etcd|
   # etcd['members'] = ["node1.example.com", "node2.example.com", "node3.example.com"]
   etcd['members'] = nil
 
-  # Set the ssl ca/cert/key for ETCD peer (master to master) communication when ['kubernetes']['secure']['enabled'] = 'true'
-  etcd['peer']['ca'] = nil
-  etcd['peer']['cert'] = nil
-  etcd['peer']['key'] = nil
-
-  # Set the ssl ca/cert/key for ETCD client (minion to master) communication when ['kubernetes']['secure']['enabled'] = 'true'
-  etcd['client']['ca'] = nil
-  etcd['client']['cert'] = nil
-  etcd['client']['key'] = nil
+  etcd['heartbeat_interval'] = 100
+  etcd['election_timeout'] = 1000
 end
 
-# Tell kubelet not to register on master
-override['kubelet']['register'] = 'false'
+# Tell kubelet not to schedule pods on master
+override['kubelet']['register']['schedulable'] = false

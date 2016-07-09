@@ -9,7 +9,7 @@ node.tag('docker.registry')
 
 case node['platform']
 when 'redhat', 'centos', 'fedora'
-  yum_package "docker-registry #{node['kubernetes_cluster']['package']['docker_registry']['version']}"
+  yum_package "docker-registry #{node['kubernetes']['package']['docker_registry']['version']}"
   yum_package "cockpit #{node['kubernetes_cluster']['package']['cockpit']['version']}"
 end
 

@@ -28,12 +28,16 @@ template '/etc/etcd/etcd.conf' do
   source 'etcd-etcd.erb'
   variables(
     etcd_client_name: node['kubernetes']['etcd']['clientname'],
+    etcd_cluster_state: node['kubernetes']['etcd']['clusterstate'],
     etcd_base_dir: node['kubernetes']['etcd']['basedir'],
     etcd_client_token: node['kubernetes']['etcd']['token'],
     etcd_client_port: node['kubernetes']['etcd']['clientport'],
     etcd_peer_port: node['kubernetes']['etcd']['peerport'],
     etcd_members: node['kubernetes']['etcd']['members'],
-    etcd_cert_dir: node['kubernetes']['secure']['directory']
+    etcd_cert_dir: node['kubernetes']['secure']['directory'],
+    etcd_bind_address: node['kubernetes']['etcd']['bind_address'],
+    etcd_heartbeat_interval: node['kubernetes']['etcd']['heartbeat_interval'],
+    etcd_election_timeout: node['kubernetes']['etcd']['election_timeout']
   )
   notifies :restart, 'service[etcd]', :immediately
 end
