@@ -27,6 +27,7 @@ template '/etc/sysconfig/flanneld' do
   mode '0640'
   source 'flannel-flanneld.erb'
   variables(
+    kubernetes_master: node['kubernetes']['master']['fqdn'],
     etcd_client_port: node['kubernetes']['etcd']['clientport'],
     etcd_cert_dir: node['kubernetes']['secure']['directory']
   )

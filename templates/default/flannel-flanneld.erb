@@ -4,11 +4,11 @@ FLANNEL_ETCD_KEY="/coreos.com/network"
 
 # Secure ETCD configuration parameters go under here when node['kubernetes']['secure']['enabled'] == 'false'
 <% if node['kubernetes']['secure']['enabled'] == 'false' -%>
-FLANNEL_ETCD="http://127.0.0.1:<%= @etcd_client_port %>"
+FLANNEL_ETCD="<% @kubernetes_master.each_with_index do |node, i| %><%= i > 0 ? ',' : '' %>http://<%= node %>:<%= @etcd_client_port %><% end %>"
 <% end -%>
 
 # Secure ETCD configuration parameters go under here when node['kubernetes']['secure']['enabled'] == 'true'
 <% if node['kubernetes']['secure']['enabled'] == 'true' -%>
-FLANNEL_ETCD="https://127.0.0.1:<%= @etcd_client_port %>"
+FLANNEL_ETCD="<% @kubernetes_master.each_with_index do |node, i| %><%= i > 0 ? ',' : '' %>https://<%= node %>:<%= @etcd_client_port %><% end %>"
 FLANNEL_OPTIONS="--etcd-certfile=<%= @etcd_cert_dir %>/client.srv.crt --etcd-keyfile=<%= @etcd_cert_dir %>/client.srv.key --etcd-cafile=<%= @etcd_cert_dir %>/client.ca.crt"
 <% end -%>
